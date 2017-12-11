@@ -1,6 +1,8 @@
 # Wavelet-Final
 repo for wavelets and filter banks final project
 
+There's a lot of applications for speaker recognition, but not many people have mastered this art. We decide to give it a try with what we've learned so far from wavelets and filter banks, MLSP, and CV. We hope to generate an algorithm that is capable of detecting the identity of the speaker from a small audio signal segmentation. We will do the following to approach this idea.
+
 1. Literature review (the goal is to find the best work done before)
   a. some spec:
     - good accuracy
