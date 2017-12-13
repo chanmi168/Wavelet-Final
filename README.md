@@ -24,7 +24,7 @@ There's a lot of applications for speaker recognition, but not many people have 
   * use a DWT coeff as inputs to a NN model (from literature)  
   * classify and calculate accuracy  
   
-4. Fine tune  
+4. Fine tune (the order is important, please fix one first)  
   * Finalize NN model that learn good wavelet coeff  
   * Try different structures, finalize structure  
   * Finalize NN model that learn good FB  
