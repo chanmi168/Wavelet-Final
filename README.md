@@ -16,22 +16,22 @@ There's a lot of applications for speaker recognition, but not many people have 
     - good DWT structure for speaker recognition
 
 2. Datasets search  
-  a. from literatures  
-  b. from google  
+  * from literatures  
+  * from google  
   
 3. Develop a working model (feature extraction, training, and classification)  
-  a. use a fixed DWT structure and FBs  
-  b. use a DWT coeff as inputs to a NN model (from literature)  
-  c. classify and calculate accuracy  
+  * use a fixed DWT structure and FBs  
+  * use a DWT coeff as inputs to a NN model (from literature)  
+  * classify and calculate accuracy  
   
 4. Fine tune  
-  a. Finalize NN model that learn good wavelet coeff  
-  b. Try different structures, finalize structure  
-  c. Finalize NN model that learn good FB  
+  * Finalize NN model that learn good wavelet coeff  
+  * Try different structures, finalize structure  
+  * Finalize NN model that learn good FB  
 
 5. Comparison
   by now, we should have an optimized working model (feature extraction, training, and classification)  
-  a. fix training and classification methods, try different feature extraction methods  
+  * fix training and classification methods, try different feature extraction methods  
     - MFCC
     - STFT
     - Wavelet packets
