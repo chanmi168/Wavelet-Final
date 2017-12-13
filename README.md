@@ -8,6 +8,7 @@ There's a lot of applications for speaker recognition, but not many people have 
     - good accuracy
     - provide all parameters (DWT design, NN model parameters such as error function)
     - provide datasets  
+  
   b. find the following take-away from literatures  
     - what are the state-of-the-art methods to do speaker recognition
     - how to construct a NN (maybe scattering transform) to learn good FBs
