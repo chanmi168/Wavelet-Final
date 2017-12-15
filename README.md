@@ -16,7 +16,7 @@ There's a lot of applications for speaker recognition, but not many people have 
  * how to construct a NN (maybe scattering transform) to learn good FBs
    - not found
  * how to construct a NN (maybe LSTM) to learn good wavelet coeff for classification
-   - LSTM/bidirectional LSTM/GRU/GRNN/
+   - LSTM/bidirectional LSTM/GRU/GRNN
  * how to design good FBs
    - MFCC like, Doubenchies filters (64 order, 7 level)
  * good DWT structure for speaker recognition
