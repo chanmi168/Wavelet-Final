@@ -8,29 +8,31 @@ There's a lot of applications for speaker recognition, but not many people have 
     - good accuracy
     - provide all parameters (DWT design, NN model parameters such as error function)
     - provide datasets
-  * find the following take-away from literatures  
-   * what are the state-of-the-art methods to do speaker recognition
-    * MFCC feature extractions
-   * how to construct a NN (maybe scattering transform) to learn good FBs
-   * how to construct a NN (maybe LSTM) to learn good wavelet coeff for classification
-   * how to design good FBs
-   * good DWT structure for speaker recognition
+    
+    
+2. find the following take-away from literatures
+ 1. what are the state-of-the-art methods to do speaker recognition
+  - MFCC feature extractions
+ 2. how to construct a NN (maybe scattering transform) to learn good FBs
+ 3. how to construct a NN (maybe LSTM) to learn good wavelet coeff for classification
+ 4. how to design good FBs
+ 5. good DWT structure for speaker recognition
 
-2. Datasets search  
+3. Datasets search  
   * from literatures  
   * from google  
   
-3. Develop a working model (feature extraction, training, and classification)  
+4. Develop a working model (feature extraction, training, and classification)  
   * use a fixed DWT structure and FBs  
   * use a DWT coeff as inputs to a NN model (from literature)  
   * classify and calculate accuracy  
   
-4. Fine tune (the order is important, please fix one first)  
+5. Fine tune (the order is important, please fix one first)  
   * Finalize NN model that learn good wavelet coeff  
   * Try different structures, finalize structure  
   * Finalize NN model that learn good FB  
 
-5. Comparison
+6. Comparison
   by now, we should have an optimized working model (feature extraction, training, and classification)  
   * fix training and classification methods, try different feature extraction methods  
     - MFCC
