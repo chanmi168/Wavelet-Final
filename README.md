@@ -10,6 +10,7 @@ There's a lot of applications for speaker recognition, but not many people have 
     - provide datasets
   * find the following take-away from literatures  
     - what are the state-of-the-art methods to do speaker recognition
+     * MFCC feature extractions
     - how to construct a NN (maybe scattering transform) to learn good FBs
     - how to construct a NN (maybe LSTM) to learn good wavelet coeff for classification
     - how to design good FBs
