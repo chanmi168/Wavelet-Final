@@ -23,15 +23,15 @@ There's a lot of applications for speaker recognition, but not many people have 
    - wavelet packet, irregular decomposition, simply DWT
 
 3. Datasets search, DONE  
-  * from literature  
+  * from literature
    - http://www.robots.ox.ac.uk/~vgg/data/voxceleb/
   * from google  
   
 4. Develop a working model (feature extraction, training, and classification), WIP
   * Data preprocessing  
-  * use a fixed DWT structure and FBs  
+  * use a fixed DWT structure and FBs
    - Daubechies wavelets 64th order, 5 levels, 32 coefficients  
-  * use a DWT coeff as inputs to a NN model (from literature)  
+  * use a DWT coeff as inputs to a NN model (from literature)
    - Bidirectional LSTM  
   * classify and calculate accuracy  
   
@@ -42,7 +42,7 @@ There's a lot of applications for speaker recognition, but not many people have 
 
 6. Comparison
   by now, we should have an optimized working model (feature extraction, training, and classification)  
-  * fix training and classification methods, try different feature extraction methods  
+  * fix training and classification methods, try different feature extraction methods
     - MFCC
     - STFT
     - Wavelet packets
