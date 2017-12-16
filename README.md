@@ -3,14 +3,14 @@ repo for wavelets and filter banks final project
 
 There's a lot of applications for speaker recognition, but not many people have mastered this art. We decide to give it a try with what we've learned so far from wavelets and filter banks, MLSP, and CV. We hope to generate an algorithm that is capable of detecting the identity of the speaker from a small audio signal segmentation. We will do the following to approach this idea.  
 
-1. Literature review (the goal is to find the best work done before)  
+1. Literature review (the goal is to find the best work done before), DONE  
   * some spec:  
     - good accuracy
     - provide all parameters (DWT design, NN model parameters such as error function)
     - provide datasets
     
     
-2. find the following take-away from literatures
+2. find the following take-away from literatures, DONE  
  * what are the state-of-the-art methods to do speaker recognition
    - MFCC feature extractions, HMM/GMM/ANN/ICSI system/NIST
  * how to construct a NN (maybe scattering transform) to learn good FBs
@@ -22,13 +22,17 @@ There's a lot of applications for speaker recognition, but not many people have 
  * good DWT structure for speaker recognition
    - wavelet packet, irregular decomposition, simply DWT
 
-3. Datasets search  
+3. Datasets search, DONE  
   * from literatures  
+   - http://www.robots.ox.ac.uk/~vgg/data/voxceleb/
   * from google  
   
-4. Develop a working model (feature extraction, training, and classification)  
+4. Develop a working model (feature extraction, training, and classification), WIP
+  * Data preprocessing  
   * use a fixed DWT structure and FBs  
+   - Daubechies wavelets 64th order, 5 levels, 32 coefficients  
   * use a DWT coeff as inputs to a NN model (from literature)  
+   - Bidirectional LSTM  
   * classify and calculate accuracy  
   
 5. Fine tune (the order is important, please fix one first)  
