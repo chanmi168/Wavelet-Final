@@ -23,7 +23,7 @@ There's a lot of applications for speaker recognition, but not many people have 
    - wavelet packet, irregular decomposition, simply DWT
 
 3. Datasets search, DONE  
-  * from literatures  
+  * from literature  
    - http://www.robots.ox.ac.uk/~vgg/data/voxceleb/
   * from google  
   
