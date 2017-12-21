@@ -7,6 +7,8 @@ import numpy as np
 import pywt
 import pywt.data
 import sys
+from tqdm import tqdm
+import math
 
 def wavLoader(filename='example.wav'):
     rate, data = wavefile.read(filename) 
@@ -106,3 +108,42 @@ def wav2dwtc(data, w, level):
     d_EI = getEnergyIndices(cd)
     energyIdx = np.concatenate((a_EI, d_EI), axis=0)
     return  energyIdx
+
+
+def getDataNLabels(filenames):
+
+    windowTS = 0.025
+    fs = 16000
+    windowLength = int(windowTS*fs)
+    
+    badfilenames = []
+    testDataset = []
+    testLabels = []
+    trainDataset = []
+    trainLabels = []
+
+    for speak_ct, filename in enumerate(filenames):
+        print(filename)
+        try:
+            rate, Data = wavLoader(filename=filename)
+            nWindows = math.floor(len(Data)/windowLength)
+            nWindows = nWindows - nWindows%2000
+            print(nWindows)
+            seqList = []
+            for i in tqdm(range(int(nWindows))):
+                data = Data[i*windowLength:(i+1)*windowLength]
+                data = data.astype(np.int32)
+                energyIdx = wav2dwtc(data, w='db20', level=8)
+                seqList.append(energyIdx)
+                if (i+1)%200 is 0:
+                    if 'test' in filename:
+                        testDataset.append(seqList)
+                        testLabels.append(speak_ct)
+                    elif 'train' in filename:
+                        trainDataset.append(seqList)
+                        trainLabels.append(speak_ct)
+                    seqList = []
+        except:
+            badfilenames.append(filename)
+
+    return testDataset, testLabels, trainDataset, trainLabels, badfilenames
