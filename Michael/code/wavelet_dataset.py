@@ -16,6 +16,9 @@ class WaveletDataset(Dataset):
         
         self.coeff_data = np.load(npy_coeff_file)
         self.label_data = np.load(label_file)
+        bb = self.coeff_data.ravel()
+
+        self.coeff_data = bb.reshape(len(self.coeff_data)/200, 200, 20)
         
 
     def __len__(self):
