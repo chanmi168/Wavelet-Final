@@ -25,6 +25,9 @@ f = open('filenames', 'w')
 f.write('\n'.join(map(lambda x: str(x), filenames)))
 f.close()
 
+aaa = sorted(filenames, key=str.lower)
+
+
 testDataset, testLabels, trainDataset, trainLabels, badfilenames = getDataNLabels(filenames)
 
 np.save('275_candidates/testDataset', np.squeeze(np.asarray(testDataset)))
