@@ -20,9 +20,9 @@ class LstmWavelet(nn.Module):
         self.target_dim     = target_dim
 
         # Define layers
-        self.lstm       = nn.LSTM(input_size=self.wavelet_dim, hidden_size=self.hidden_dim, num_layers=2, batch_first=True)
-        self.linear1    = nn.Linear(self.hidden_dim, self.target_dim)
-        self.linear2    = nn.Linear(self.sequence_dim, 1)
+        self.lstm       = nn.LSTM(input_size=self.wavelet_dim, hidden_size=self.hidden_dim, num_layers=2, batch_first=True).cuda()
+        self.linear1    = nn.Linear(self.hidden_dim, self.target_dim).cuda()
+        self.linear2    = nn.Linear(self.sequence_dim, 1).cuda()
 
         # Define initial hidden state
         self.hidden     = self.init_hidden()
@@ -31,8 +31,8 @@ class LstmWavelet(nn.Module):
 
         # zero initial hidden state
         # The axes semantics are (num_layers, minibatch_size, hidden_dim)
-        return (autograd.Variable(torch.zeros(2, 10, self.hidden_dim)),
-                autograd.Variable(torch.zeros(2, 10, self.hidden_dim)))
+        return (autograd.Variable(torch.zeros(2, 10, self.hidden_dim).cuda()),
+                autograd.Variable(torch.zeros(2, 10, self.hidden_dim).cuda()))
 
     def forward(self, wavelet):
         #wavelet size: 10 X 200 X 64

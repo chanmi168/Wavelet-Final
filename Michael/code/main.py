@@ -5,7 +5,14 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
+import torch
+import torch.autograd as autograd
+import torch.nn as nn
+import torch.nn.functional as F
+import torch.optim as optim
+
 import lstm_wavelet
+import wavelet_dataset
 
 # %% Loading data and labels
 """
@@ -36,9 +43,9 @@ waveletCoeffs = wav2wpc(bbb)
 
 
 # loop through all folders, import all files in a folder 
-
-
 """
+
+
 
 # %% Preporcess data: 
 #   -> downsample   -> fragmentation    -> extract DWT coeff 
@@ -46,47 +53,66 @@ waveletCoeffs = wav2wpc(bbb)
 
 # %% Run using LSTM
 
-# WAVELET_DIM = 64
-# HIDDEN_DIM = 512
-# OUTPUT_DIM = 300 // # of speakers
-# model = LstmWavelet(HIDDEN_DIM, WAVELET_DIM, OUTPUT_DIM)
-# loss_function = nn.NLLLoss()
-# optimizer = optim.SGD(model.parameters(), lr=0.1)
-#  # pre-run score
+WAVELET_DIM = 64
+HIDDEN_DIM = 512
+SEQUENCE_DIM = 200
+OUTPUT_DIM = 275 # of speakers
 
-# for _,wavelefCoeff in get_waveletCoeff(file):
-#     tensor = autograd.Variable(torch.from_numpy(wavelefCoeff))
-#     tag_scores = model(tensor)
-#     print(tag_scores)
-#     break
+#train_wavelet_dataset = WaveletDataset(npy_coeff_file=, label_file=)
 
-# # train for 6 epoches (70%)
-# for epoch in range(6):
-#     for key,wavelefCoeff in get_waveletCoeff(trainFiles): # trainFiles contain all wavelet coeff 
-#                                                             # for all training dataset
-#         #if key not in key2num:
-#         #    continue
-#         tensor = autograd.Variable(torch.from_numpy(wavelefCoeff))
-#         tensor = tensor.cuda() # use gpu
-#         targets = autograd.Variable(torch.from_numpy())
-#         targets = targets.cuda()
+#trainloader = torch.utils.data.DataLoader(train_wavelet_dataset, batch_size=10, shuffle=True, num_workers=2)
 
-#         model.zero_grad()
-#         model.hidden = model.init_hidden()
 
-#         # forward pass
-#         tag_scores = model(tensor)
+model = LstmWavelet(HIDDEN_DIM, WAVELET_DIM, SEQUENCE_DIM, OUTPUT_DIM)
+loss_function = nn.NLLLoss()
+optimizer = optim.SGD(model.parameters(), lr=0.1)
 
-#         # backprop
-#         loss = loss_function(tag_scores, targets)
-#         loss.backward()
-#         optimizer.step()
 
-# # post-run score (30%)
-# for _,wavelefCoeff in get_waveletCoeff(testFiles): # testFiles contain all wavelet coeff 
-#                                                             # for all testing dataset
-#     tensor = torch.from_numpy(wavelefCoeff)
-#     tag_scores = model(tensor)
-#     print(tag_scores)
-#     break
+# train for 6 epoches (70%)
+loss_his = []
+print('Start Training')
+for epoch in range(6):
 
+	running_loss = 0.0
+	for i, data in enumerate(trainloader, 0):
+
+		input_coeff, label = data
+
+		input_coeff = input_coeff.cuda()
+		label = label.cuda()
+
+		input_coeff, label = Variable(input_coeff), Variable(label.float())
+
+        model.zero_grad()
+        model.hidden = model.init_hidden()
+
+        # forward pass
+        result = model(input_coeff)
+
+        # backprop
+        loss = loss_function(result, label)
+        loss.backward()
+        optimizer.step()
+
+        # print statistics
+		running_loss += loss.data[0]
+		#plot
+		if i % 5 == 4:
+			loss_his.append(running_loss / 5)
+
+		if i % 100 == 99:    # print every 2000 mini-batches
+			print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 100))
+			running_loss = 0.0
+
+torch.save(model.state_dict(), './train_weight.pt')
+print('Finished Training')
+
+"""
+# post-run score (30%)
+for _,wavelefCoeff in get_waveletCoeff(testFiles): # testFiles contain all wavelet coeff 
+                                                            # for all testing dataset
+    tensor = torch.from_numpy(wavelefCoeff)
+    tag_scores = model(tensor)
+    print(tag_scores)
+    break
+"""
