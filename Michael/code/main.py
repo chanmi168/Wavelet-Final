@@ -1,6 +1,5 @@
 # %% Import modules
 
-from dataParser import wavLoader, wav2wpc
 import numpy as np
 import matplotlib.pyplot as plt
 import os
@@ -58,12 +57,12 @@ HIDDEN_DIM = 512
 SEQUENCE_DIM = 200
 OUTPUT_DIM = 275 # of speakers
 
-#train_wavelet_dataset = WaveletDataset(npy_coeff_file=, label_file=)
+train_wavelet_dataset = wavelet_dataset.WaveletDataset(npy_coeff_file='./rand_coeff.npy', label_file='./rand_label.npy')
 
-#trainloader = torch.utils.data.DataLoader(train_wavelet_dataset, batch_size=10, shuffle=True, num_workers=2)
+trainloader = torch.utils.data.DataLoader(train_wavelet_dataset, batch_size=10, shuffle=True, num_workers=2)
 
 
-model = LstmWavelet(HIDDEN_DIM, WAVELET_DIM, SEQUENCE_DIM, OUTPUT_DIM)
+model = lstm_wavelet.LstmWavelet(HIDDEN_DIM, WAVELET_DIM, SEQUENCE_DIM, OUTPUT_DIM)
 loss_function = nn.NLLLoss()
 optimizer = optim.SGD(model.parameters(), lr=0.1)
 
@@ -73,15 +72,15 @@ loss_his = []
 print('Start Training')
 for epoch in range(6):
 
-	running_loss = 0.0
-	for i, data in enumerate(trainloader, 0):
+    running_loss = 0.0
+    for i, data in enumerate(trainloader, 0):
 
-		input_coeff, label = data
+        input_coeff, label = data
 
-		input_coeff = input_coeff.cuda()
-		label = label.cuda()
+        input_coeff = input_coeff.cuda()
+        label = label.cuda()
 
-		input_coeff, label = Variable(input_coeff), Variable(label.float())
+        input_coeff, label = autograd.Variable(input_coeff.float()), autograd.Variable(label.long())
 
         model.zero_grad()
         model.hidden = model.init_hidden()
@@ -95,14 +94,14 @@ for epoch in range(6):
         optimizer.step()
 
         # print statistics
-		running_loss += loss.data[0]
-		#plot
-		if i % 5 == 4:
-			loss_his.append(running_loss / 5)
+        running_loss += loss.data[0]
+        #plot
+        if i % 5 == 4:
+            loss_his.append(running_loss / 5)
 
-		if i % 100 == 99:    # print every 2000 mini-batches
-			print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 100))
-			running_loss = 0.0
+        if i % 100 == 99:    # print every 2000 mini-batches
+            print('[%d, %5d] loss: %.3f' % (epoch + 1, i + 1, running_loss / 100))
+            running_loss = 0.0
 
 torch.save(model.state_dict(), './train_weight.pt')
 print('Finished Training')
