@@ -6,6 +6,7 @@ import numpy as np
 
 import pywt
 import pywt.data
+import sys
 
 def wavLoader(filename='example.wav'):
     rate, data = wavefile.read(filename) 
@@ -89,7 +90,8 @@ def wav2dwtc(data, w, level):
     w = pywt.Wavelet(w)
     # a = data
     # normalizee data before processsings
-    a = (data-min(data))/(max(data)-min(data))
+    eps = sys.float_info.epsilon
+    a = (data-min(data)+eps)/(max(data)-min(data)+eps)
     ca = []
     cd = []
 
