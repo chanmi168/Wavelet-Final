@@ -4,6 +4,7 @@ import torch.autograd as autograd
 import torch.optim as optim
 from kaldi_io import read_mat_scp
 
+
 HIDDEN_DIM = 512
 MFCC_DIM = 20
 SPK = 300

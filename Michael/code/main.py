@@ -5,8 +5,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 import os
 
-# %% Loading data and labels
+import lstm_wavelet
 
+# %% Loading data and labels
+"""
 THIS_FOLDER = os.path.dirname(os.path.abspath(__file__))
 my_file = os.path.join(THIS_FOLDER, 'data/Speaker3/mike_0.wav')
 rate, data = wavLoader(filename=my_file)
@@ -36,7 +38,7 @@ waveletCoeffs = wav2wpc(bbb)
 # loop through all folders, import all files in a folder 
 
 
-
+"""
 
 # %% Preporcess data: 
 #   -> downsample   -> fragmentation    -> extract DWT coeff 
