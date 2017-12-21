@@ -100,10 +100,9 @@ def wav2dwtc(data, w, level):
     for i in range(level):
         (a, d) = pywt.dwt(a, w, mode)
         ca.append(a)
-        # coeff_list = [a, None] + [None] * i
-        # rec_a.append(pywt.waverec(coeff_list, w))
+        cd.append(d)
 
-    # rec_a_EI = getEnergyIndices(rec_a)
     a_EI = getEnergyIndices(ca)
-
-    return  a_EI
+    d_EI = getEnergyIndices(cd)
+    energyIdx = np.concatenate((a_EI, d_EI), axis=0)
+    return  energyIdx

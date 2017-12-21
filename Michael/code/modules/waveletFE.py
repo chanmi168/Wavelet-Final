@@ -31,12 +31,6 @@ testLabels = []
 trainDataset = []
 trainLabels = []
 
-rate, Data = wavLoader(filename='275_candidates/Marilu_Henner_test.wav')
-nWindows = math.floor(len(Data)/windowLength)
-nWindows = nWindows - nWindows%2000
-print(nWindows)
-
-
 for speak_ct, filename in enumerate(filenames):
     print(filename)
     try:
@@ -48,8 +42,8 @@ for speak_ct, filename in enumerate(filenames):
         for i in tqdm(range(int(nWindows))):
             data = Data[i*windowLength:(i+1)*windowLength]
             data = data.astype(np.int32)
-            a_EI = wav2dwtc(data, w='db20', level=8)
-            seqList.append(a_EI)
+            energyIdx = wav2dwtc(data, w='db20', level=8)
+            seqList.append(energyIdx)
             if (i+1)%200 is 0:
                 if 'test' in filename:
                     testDataset.append(seqList)
