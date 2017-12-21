@@ -145,7 +145,8 @@ def getDataNLabels(filenames):
                     seqList = []
         except:
             badfilenames.append(filename)
-        if len(badfilenames) is 0:
-            badfilenames.append('empty')
+
+    if len(badfilenames) is 0:
+        badfilenames.append('empty')
 
     return testDataset, testLabels, trainDataset, trainLabels, badfilenames
