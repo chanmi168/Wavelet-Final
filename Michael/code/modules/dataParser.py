@@ -110,12 +110,19 @@ def wav2dwtc(data, w, level):
     return  energyIdx
 
 
-def getDataNLabels(filenames):
+def getDataNLabels(filenames,WAVELET_DIM=8, SEQUENCE_DIM=200, SEQUENCE_TIME=5, BATCH_DIM=10):
 
-    windowTS = 0.025
+    # print('WAVELET_DIM =', WAVELET_DIM)
+    # print('SEQUENCE_DIM =', SEQUENCE_DIM)
+    # print('SEQUENCE_TIME =', SEQUENCE_TIME)
+    # print('BATCH_DIM =', BATCH_DIM)
+
+
+    windowTS = SEQUENCE_TIME/SEQUENCE_DIM
     fs = 16000
     windowLength = int(windowTS*fs)
-
+    # print('windowLength is:', windowLength)
+    # print('windowTS is:', windowTS)
     idxLabels = np.array(range(int(len(filenames)/2)))
     idxLabels = np.repeat(idxLabels, 2)
     labelDict = dict(zip(filenames, idxLabels))
@@ -126,21 +133,23 @@ def getDataNLabels(filenames):
     trainDataset = []
     trainLabels = []
 
+
     for speak_ct, filename in enumerate(filenames):
         speakerIdx = labelDict[filename]
         print(filename)
         try:
             rate, Data = wavLoader(filename=filename)
             nWindows = math.floor(len(Data)/windowLength)
-            nWindows = nWindows - nWindows%2000
+            nWindows = nWindows - nWindows%int(SEQUENCE_DIM*BATCH_DIM)
             print(nWindows)
+
             seqList = []
             for i in tqdm(range(int(nWindows))):
                 data = Data[i*windowLength:(i+1)*windowLength]
                 data = data.astype(np.int32)
-                energyIdx = wav2dwtc(data, w='db20', level=8)
+                energyIdx = wav2dwtc(data, w='db20', level=WAVELET_DIM)
                 seqList.append(energyIdx)
-                if (i+1)%200 is 0:
+                if (i+1)%SEQUENCE_DIM is 0:
                     if 'test' in filename:
                         testDataset.append(seqList)
                         testLabels.append(speakerIdx)
