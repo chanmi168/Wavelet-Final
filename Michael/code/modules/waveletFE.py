@@ -17,15 +17,14 @@ import math
 
 #######-----Import, fragment, compute wavelet energy index-----#######
 
-filenames = glob.glob('275_candidates/*.wav')
-counter = 0
-speak_ct = 0
+foldername = '/Users/MichaelChan/Desktop/JHU/Wavelets and Filter Banks/Final Project/275_candidates'
+filenames = glob.glob(foldername+'/*.wav')
+# filenames = glob.glob('275_candidates/*.wav')
+filenames = sorted(filenames, key =lambda x: x.split('/')[-1])
 
 f = open('filenames', 'w')
 f.write('\n'.join(map(lambda x: str(x), filenames)))
 f.close()
-
-aaa = sorted(filenames, key=str.lower)
 
 
 testDataset, testLabels, trainDataset, trainLabels, badfilenames = getDataNLabels(filenames)

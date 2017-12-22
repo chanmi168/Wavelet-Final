@@ -115,6 +115,10 @@ def getDataNLabels(filenames):
     windowTS = 0.025
     fs = 16000
     windowLength = int(windowTS*fs)
+
+    idxLabels = np.array(range(int(len(filenames)/2)))
+    idxLabels = np.repeat(idxLabels, 2)
+    labelDict = dict(zip(filenames, idxLabels))
     
     badfilenames = []
     testDataset = []
@@ -123,6 +127,7 @@ def getDataNLabels(filenames):
     trainLabels = []
 
     for speak_ct, filename in enumerate(filenames):
+        speakerIdx = labelDict[filename]
         print(filename)
         try:
             rate, Data = wavLoader(filename=filename)
@@ -138,10 +143,10 @@ def getDataNLabels(filenames):
                 if (i+1)%200 is 0:
                     if 'test' in filename:
                         testDataset.append(seqList)
-                        testLabels.append(speak_ct)
+                        testLabels.append(speakerIdx)
                     elif 'train' in filename:
                         trainDataset.append(seqList)
-                        trainLabels.append(speak_ct)
+                        trainLabels.append(speakerIdx)
                     seqList = []
         except:
             badfilenames.append(filename)
