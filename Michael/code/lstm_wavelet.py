@@ -20,6 +20,7 @@ class LstmWavelet(nn.Module):
 
         # Define layers
         self.lstm       = nn.LSTM(input_size=self.wavelet_dim, hidden_size=self.hidden_dim, num_layers=2, batch_first=True).cuda()
+        self.batchnlayer = nn.BatchNorm1d(self.hidden_dim).cuda()
         self.linear1    = nn.Linear(self.hidden_dim, self.target_dim).cuda()
         self.linear2    = nn.Linear(self.sequence_dim, 1).cuda()
 
@@ -38,8 +39,9 @@ class LstmWavelet(nn.Module):
         
         lstm_out, self.hidden = self.lstm(wavelet, self.hidden)
         #lstm_out size: 10 X 200 X 512
-    
+        #batch_norm            = self.batchnlayer(torch.transpose(lstm_out, 1, 2).contiguous())
         candidate_space       = self.linear1(lstm_out)
+        #candidate_space       = self.linear1(torch.transpose(batch_norm, 1, 2))
         #candidate_space size: 10 X 200 X 275
         
         #transpose 10 X 275 X 200

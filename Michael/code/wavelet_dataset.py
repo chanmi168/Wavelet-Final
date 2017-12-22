@@ -11,13 +11,13 @@ class WaveletDataset(Dataset):
         
         self.coeff_data = np.load(npy_coeff_file)
         self.label_data = np.load(label_file)
-        
+        self.coeff_data = self.coeff_data[:, :, 8:16]
     def __len__(self):
         return len(self.coeff_data)
 
     def __getitem__(self, idx):
-    	coeff = self.coeff_data[idx]
-    	label = self.label_data[idx]
+        coeff = self.coeff_data[idx]
+        label = self.label_data[idx]
 
         sample = (coeff, label)
         
