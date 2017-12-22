@@ -1,14 +1,9 @@
 
 import numpy as np
 import matplotlib.pyplot as plt
-import os
 
 import torch
-import torch.autograd as autograd
-import torch.nn as nn
-import torch.nn.functional as F
-import torch.optim as optim
-from torch.utils.data import Dataset, DataLoader
+from torch.utils.data import Dataset
 
 class WaveletDataset(Dataset):
     
@@ -16,11 +11,7 @@ class WaveletDataset(Dataset):
         
         self.coeff_data = np.load(npy_coeff_file)
         self.label_data = np.load(label_file)
-        bb = self.coeff_data.ravel()
-
-        self.coeff_data = bb.reshape(len(self.coeff_data)/200, 200, 20)
         
-
     def __len__(self):
         return len(self.coeff_data)
 
